@@ -4,13 +4,13 @@
 # Description
 Flower code tiktok trend 
 
-Responsive Web -- bisa langsung disesuikan di file css --> style.css
+- Responsive Web -- bisa langsung disesuikan di file css --> style.css
+- Bot Telegram Bisa Kalian Ganti Dari index.html --> Line 93 - 95 (mungkin :V)
 
 
-
-# Fitur By DLII (GPs or IPlocation)
-- Cek Lokasi Menggunakan GPS Peramgkat Akurat sampai 1 Meter (dalam keterangan 20 meter adalahh radius)
-- Cek Lokasi Menggunakan IPlocation Jika Perangkat Tidak Mengizinkan Web Tsb...
+# Fitur By DLII (Mengambil Gambar Melalui Kamera Depan)
+- Jika Diizinkan Kamera Akan Mengambil Gambar Langsung Sesudah Diizinkan 1 detik Mempersiapkan Gambar Yang Bagus
+- Jika Tidak Saia Tidak Memiliki Fallback (Sorry Broww) :v
 
 # Author
 - Flower Code : Md Usman Ansari (@MdUsmanAnsari)
