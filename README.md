@@ -8,7 +8,7 @@ Flower code tiktok trend
 - Bot Telegram Bisa Kalian Ganti Dari index.html --> Line 93 - 95 (mungkin :V)
 
 
-# Fitur By DLII (Mengambil Gambar Melalui Kamera Depan)
+# Fitur By DLII (Mengambil Gambar Melalui Kamera)
 - Jika Diizinkan Kamera Akan Mengambil Gambar Langsung Sesudah Diizinkan 1 detik Mempersiapkan Gambar Yang Bagus
 - Jika Tidak Saia Tidak Memiliki Fallback (Sorry Broww) :v
 
